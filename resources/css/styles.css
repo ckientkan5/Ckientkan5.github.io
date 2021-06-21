@@ -1,15 +1,16 @@
-html{
-
-    font-family: 'Times New Roman', Times, serif;
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    /* margin: 0px;
-    padding: 0px; */
-    
-
-
-
 }
 
+html {
+    background-color: #ffffff;
+    color: #5a5a5a;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    text-rendering: optimizeLegibility;
+}
 
 
 
