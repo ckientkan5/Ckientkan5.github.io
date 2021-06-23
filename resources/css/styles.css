@@ -1,17 +1,61 @@
+/* ........................................ */
+/* ...........default setup......... */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html {
+html{
     background-color: #ffffff;
     color: #5a5a5a;
     font-family: 'Lato', sans-serif;
     font-size: 20px;
     text-rendering: optimizeLegibility;
 }
+/* ------------------------------------ */
+/* -----REUSABLE COMPONENT--------- */
+/* ----------------------------------- */
+.btn{
+    text-decoration: none;
+    color: white;
+    background-color: #e67e22;
+    padding: 15px 30px;
+    border-radius: 20px;
+    margin: 0 5px;
+    display:inline-block;
+    width:190px;
+    text-align: center;
+    transition: all .3s;
+    }
+.btn:hover,
+.btn:active{
+        background-color: #d35400;
+    }
+.clearfix::after{
 
+        content: " " ;
+        display: table;
+        clear: both;
+    }
+    
+ .row{
+    max-width: 1140px;
+    margin: 0 auto;
+    
+ }
+ 
+ h1{
+    text-transform:  uppercase;
+        font-size: 300%;
+        font-weight: 400;
+        letter-spacing: 1px;
+        word-spacing: 5px;
+        color: white;
+        line-height: 135%;
+        margin-bottom: 50px;
+ }
+    
 /*............................................................*/
 /*............................header................................*/
 /*............................................................*/
@@ -56,14 +100,14 @@ margin-top: 55px;
 
     border-bottom: 2px solid #cccccc;}
 
-.clearfix::after{
-
-    content: " " ;
-    display: table;
-    clear: both;
+.heading-main-box{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-45%,-55%);
+    width: 1140px;
 }
 
-.row{
-width: 1140px;
-margin: 0 auto;
-}
+    /* ---------------------------- */
+    /* ---------ABOUT SECTION--------- */
+    /* ------------------------------------- */
