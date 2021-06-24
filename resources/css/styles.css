@@ -44,18 +44,49 @@ html{
     margin: 0 auto;
     
  }
- 
- h1{
+h1,h2{
     text-transform:  uppercase;
+    letter-spacing: 1px;
+}
+ h1{
         font-size: 300%;
         font-weight: 400;
-        letter-spacing: 1px;
         word-spacing: 5px;
         color: white;
         line-height: 135%;
         margin-bottom: 50px;
  }
-    
+h2{
+    color: #e67e22;
+    font-size: 180%;
+    font-weight: 700;
+    text-align: center;
+
+} 
+h2:after{
+    content: " " ;
+    display:block;
+    width:150px;
+    height:2px;
+    background-color: rgba(230,126,34,0.5);
+    margin:0 auto;
+    margin-top:5px;
+
+}
+.p-long{
+    text-align: center;
+    color:#265077;
+    font-size: 22px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 70%;
+    margin-left: 15%;
+    line-height: 140%;
+
+}
+section{
+    padding:50px;
+}
 /*............................................................*/
 /*............................header................................*/
 /*............................................................*/
@@ -111,3 +142,12 @@ margin-top: 55px;
     /* ---------------------------- */
     /* ---------ABOUT SECTION--------- */
     /* ------------------------------------- */
+.about-picture img {
+
+    width:90%;
+
+}
+
+
+
+    
