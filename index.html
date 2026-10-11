@@ -1,74 +1,225 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="vi">
 <head>
-
-    <title> SelfTaught</title>
-
-    <meta charset="utf-8">
-    <link href="/your-path-to-fontawesome/css/all.css" rel="stylesheet"
-        integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-<link rel="stylesheet" href="vendors/css/grid.css">
-    <link rel="stylesheet" type="text/css" href="resources/css/styles.css">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bộ mẫu câu tiếng Anh giao tiếp hằng ngày và khẩu lệnh trong trường tiểu học</title>
+<style>
+:root{
+  --blue:#2b6cb0; --blue2:#4299e1; --ink:#243b53; --muted:#64748b;
+  --paper:#fffdf8; --line:#dbe7f3; --accent:#f6c85f;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:"Segoe UI",Arial,sans-serif;background:linear-gradient(135deg,#dbeafe,#fef3c7);color:var(--ink);overflow:hidden}
+button{font:inherit}
+.app{width:100%;height:100%;display:flex;flex-direction:column}
+.toolbar{height:64px;display:flex;align-items:center;justify-content:center;gap:12px;padding:8px 14px;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);box-shadow:0 2px 12px rgba(0,0,0,.12);z-index:20}
+.toolbar button,.toolbar select{border:0;border-radius:12px;padding:9px 14px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.10);cursor:pointer;color:var(--ink)}
+.toolbar button:hover{transform:translateY(-1px)}
+.counter{min-width:120px;text-align:center;font-weight:700}
+.stage{flex:1;display:flex;align-items:center;justify-content:center;padding:18px;perspective:2200px;overflow:hidden}
+.book{position:relative;width:min(1180px,94vw);height:min(760px,86vh);transform-style:preserve-3d}
+.page{
+  position:absolute;inset:0;background:var(--paper);border-radius:8px 14px 14px 8px;
+  box-shadow:0 18px 50px rgba(15,23,42,.22), inset 0 0 0 1px rgba(15,23,42,.08);
+  padding:34px 42px 50px;overflow:hidden;backface-visibility:hidden;
+  transform-origin:left center;transition:transform .72s cubic-bezier(.22,.61,.36,1),z-index 0s linear .35s;
+}
+.page::before{content:"";position:absolute;inset:0 0 0 0;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.06),transparent 7%,transparent 92%,rgba(0,0,0,.025))}
+.page.flipped{transform:rotateY(-180deg);z-index:0}
+.page.active{z-index:10}
+.cover{background:#fff;color:white;display:flex;align-items:center;justify-content:center;text-align:center;padding:0}
+.cover img{width:100%;height:100%;object-fit:cover;display:block;border-radius:8px 14px 14px 8px}
+.cover h1{font-size:clamp(28px,4vw,50px);line-height:1.15;margin:0 0 22px;text-shadow:0 3px 10px rgba(0,0,0,.2)}
+.cover p{font-size:18px;margin:8px}
+.badge{display:inline-block;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.5)}
+.heading{display:flex;align-items:center;gap:10px;border-bottom:3px solid #bfdbfe;padding-bottom:10px;margin-bottom:14px}
+.heading h2{margin:0;color:#1d4ed8;font-size:clamp(18px,2.2vw,28px)}
+.icon{font-size:27px}
+.table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:clamp(12px,1.25vw,16px)}
+.table th{background:#e0f2fe;color:#0f3d6e;padding:9px;text-align:left;position:sticky;top:0}
+.table td{padding:7px 9px;border-top:1px solid var(--line);vertical-align:top;line-height:1.35}
+.table td:first-child{font-weight:600;width:50%}
+.table tr:nth-child(even) td{background:#fff}
+.source-line{font-size:14px;line-height:1.35;margin:3px 0}
+.footer{position:absolute;bottom:14px;left:42px;right:42px;display:flex;justify-content:space-between;color:#64748b;font-size:12px;border-top:1px solid #e5e7eb;padding-top:7px}
+.controls-hint{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-size:12px;color:#64748b;z-index:5}
+.search{width:min(360px,35vw)}
+#toc{max-width:760px;max-height:60vh;overflow:auto;margin:auto}
+#toc button{display:block;width:100%;text-align:left;margin:6px 0;padding:10px;border:1px solid var(--line);background:#fff;border-radius:10px;cursor:pointer}
+@media(max-width:700px){
+ .toolbar{height:58px;gap:6px}.toolbar button,.toolbar select{padding:7px 9px}.search{display:none}
+ .stage{padding:8px}.book{height:calc(100vh - 82px);width:96vw}.page{padding:24px 20px 48px}
+ .footer{left:20px;right:20px}.table{font-size:11px}
+}
+</style>
 </head>
-
 <body>
-    <header>
-        <a href="#"> <img class="logo" src="./resources/img/logo.png" alt="logo"></a>
-        <ul class="main-nav">
-            <!-- unodered list -->
-            <li><a href="#">How clients think </a></li>
-            <!-- list item -->
-            <li><a href="#">About </a></li>
-            <li><a href="#">Products </a></li>
-            <li><a href="#">Contact </a></li>
+<div class="app">
+  <div class="toolbar">
+    <button id="prev">◀ Trang trước</button>
+    <div class="counter" id="counter">1 / 1</div>
+    <button id="next">Trang sau ▶</button>
+    <button id="tocBtn">☰ Mục lục</button>
+    <input id="search" class="search" placeholder="🔎 Tìm trong sách...">
+    <button id="fullscreen">⛶</button>
+  </div>
+  <div class="stage" id="stage">
+    <div class="book" id="book"></div>
+    <div class="controls-hint">Kéo góc trang / dùng nút ◀ ▶ / phím ← →</div>
+  </div>
+</div>
 
-        </ul>
-        <div class="clearfix"> </div>
-        <div class="row">
-            <div class="heading-main-box"></div>
-            <h1>
-                We will study <br> English together.<br>
-                So join with us.
-            </h1>
-            <a href="#" class="btn"> Tell me more</a>
-            <a href="#" class="btn"> Join us</a>
-        </div>
-    </header>
-    <section class="about-section">
-        <div class="row">
-        <h2>About Us</h2>
-        <p class="p-long">
-        	We are people that are studying English by ourselves, we believe that you don’t need to pay so much money for being good at English, we’re here to help you
-        </p>
-    </div>
-    <div class="row">
-       <div class="col span-1-of-4 about-picture">
-           <img src="./resources/img/activities1.jpeg" alt="activities1">
-           <p class="picture-title">
-               Team Working
-           </p>
-           </div>
-       <div class="col span-1-of-4 about-picture">
-           <img src="./resources/img/activities2.jpeg" alt="activities2">
-           <p class="picture-title">
-               Funny class
-           </p>
-           </div>
-       <div class="col span-1-of-4 about-picture">
-           <img src="./resources/img/activities3.jpeg" alt="activities3">
-           <p class="picture-title">
-            Be confident
-           </p>
-           </div>
-       <div class="col span-1-of-4 about-picture">
-           <img src="./resources/img/activities4.jpeg" alt="activities4">
-           <p class="picture-title">
-               All our friends
-           </p>
-       </div>
-    </div>
-    </section>
+<script>
+const SOURCE = [{"page": 1, "lines": ["I. MẪU CÂU TIẾNG ANH GIAO TIẾP HẰNG NGÀY", "1. CHÀO HỎI – GREETINGS", "English", "Tiếng Việt", "Good morning!", "Chào buổi sáng!", "Good afternoon!", "Chào buổi chiều!", "Hello!", "Xin chào!", "Hi!", "Chào!", "How are you?", "Em khỏe không?", "How are you today?", "Hôm nay em khỏe không?", "How are you doing?", "Dạo này em thế nào?", "Are you OK?", "Em ổn chứ?", "I’m fine, thank you.", "Em khỏe, cảm ơn cô/thầy.", "I’m good, thank you.", "Em khỏe, cảm ơn cô/thầy.", "Nice to see you!", "Rất vui được gặp em!", "Nice to see you again!", "Rất vui được gặp lại em!", "Welcome!", "Chào mừng em!", "Welcome back!", "Chào mừng em trở lại!", "Have a nice day!", "Chúc em một ngày vui vẻ!", "Have a good day!", "Chúc em một ngày tốt lành!", "See you!", "Hẹn gặp lại!", "See you later!", "Hẹn gặp lại sau!", "See you tomorrow!", "Hẹn gặp lại ngày mai!", "Goodbye!", "Tạm biệt!", "2. CẢM ƠN – XIN LỖI – ĐÁP LỜI", "English", "Tiếng Việt", "Thank you!", "Cảm ơn!", "Thank you very much!", "Cảm ơn rất nhiều!"]}, {"page": 2, "lines": ["Thanks!", "Cảm ơn!", "You’re welcome!", "Không có gì!", "No problem!", "Không có gì!", "That’s OK.", "Không sao.", "It’s all right.", "Không sao.", "Sorry!", "Xin lỗi!", "I’m sorry.", "Em xin lỗi.", "Excuse me.", "Xin phép/Xin lỗi.", "May I come in?", "Em có thể vào lớp không ạ?", "May I go out?", "Em có thể ra ngoài không ạ?", "May I ask a question?", "Em có thể hỏi một câu không ạ?", "May I borrow your pencil?", "Em có thể mượn bút của bạn không?", "3. BẮT ĐẦU TIẾT HỌC – STARTING THE LESSON", "English", "Tiếng Việt", "Are you ready?", "Các em sẵn sàng chưa?", "Are you ready to learn?", "Các em sẵn sàng học chưa?", "Shall we start?", "Chúng ta bắt đầu nhé?", "Let’s start!", "Bắt đầu nào!", "Let’s begin!", "Chúng ta bắt đầu nhé!", "Let’s get started!", "Chúng ta bắt đầu thôi!", "Let’s get ready!", "Chuẩn bị nào!", "Is everyone ready?", "Mọi người sẵn sàng chưa?", "Are we ready?", "Chúng ta sẵn sàng chưa?", "Let’s begin our lesson.", "Bắt đầu bài học nhé.", "Let’s start our activity.", "Bắt đầu hoạt động nhé.", "Let’s begin with a game.", "Bắt đầu bằng một trò chơi nhé.", "Let’s have some fun!", "Cùng vui nào!", "Let’s learn together!", "Cùng học nhé!", "Let’s do it together.", "Cùng làm nhé.", "4. THU HÚT SỰ CHÚ Ý – GETTING ATTENTION"]}, {"page": 3, "lines": ["English", "Tiếng Việt", "Listen, please.", "Hãy lắng nghe nhé.", "Listen carefully.", "Lắng nghe thật kỹ.", "Listen to me.", "Hãy nghe cô/thầy.", "Listen to your teacher.", "Hãy nghe giáo viên.", "Look, please.", "Nhìn nhé.", "Look at me.", "Nhìn cô/thầy.", "Look at the board.", "Nhìn lên bảng.", "Look here.", "Nhìn ở đây.", "Eyes on me, please.", "Nhìn cô/thầy nào.", "Pay attention, please.", "Hãy chú ý nhé.", "Attention, please!", "Xin chú ý!", "Everyone, listen!", "Tất cả chú ý!", "Can you hear me?", "Các em có nghe cô/thầy không?", "Can you see?", "Các em có nhìn thấy không?", "Is everyone listening?", "Mọi người đang lắng nghe chứ?", "Stop and listen.", "Dừng lại và lắng nghe.", "Listen for a moment.", "Lắng nghe một chút nhé.", "I need your attention.", "Cô/thầy cần các em chú ý.", "5. GIỮ TRẬT TỰ – CLASSROOM MANAGEMENT", "English", "Tiếng Việt", "Be quiet, please.", "Giữ trật tự nhé.", "Please be quiet.", "Hãy giữ trật tự nhé.", "Quiet, please.", "Trật tự nhé.", "Stop talking, please.", "Dừng nói chuyện nhé.", "Please stop talking.", "Hãy dừng nói chuyện.", "Don’t talk, please.", "Không nói chuyện nhé.", "No talking, please.", "Không nói chuyện nhé.", "Listen, don’t talk.", "Lắng nghe, không nói chuyện.", "Wait, please.", "Chờ một chút nhé.", "Wait for me.", "Chờ cô/thầy nhé.", "One at a time, please.", "Từng người một nhé."]}, {"page": 4, "lines": ["Take turns, please.", "Lần lượt nhé.", "Stay in your seat.", "Ngồi tại chỗ nhé.", "Stay seated, please.", "Ngồi tại chỗ nhé.", "Sit nicely, please.", "Ngồi ngay ngắn nhé.", "Sit still, please.", "Ngồi yên nhé.", "Keep still, please.", "Giữ yên nhé.", "Calm down, please.", "Bình tĩnh nào.", "Settle down, please.", "Ổn định nào.", "Let’s be quiet.", "Chúng ta giữ trật tự nhé.", "Give me a minute.", "Cho cô/thầy một phút nhé.", "Wait until I finish.", "Chờ cô/thầy nói xong nhé.", "6. TƯ THẾ – POSTURE", "English", "Tiếng Việt", "Sit up straight.", "Ngồi thẳng lưng.", "Sit straight, please.", "Ngồi thẳng nhé.", "Sit properly.", "Ngồi đúng tư thế.", "Feet on the floor.", "Đặt chân xuống sàn.", "Hands on the desk.", "Đặt tay lên bàn.", "Hands down, please.", "Hạ tay xuống nhé.", "Keep your hands down.", "Giữ tay ở dưới.", "Face the front.", "Quay mặt lên phía trước.", "Face the board.", "Quay lên bảng.", "Turn around.", "Quay lại.", "Turn this way.", "Quay về phía này.", "Stand up straight.", "Đứng thẳng.", "Stand still.", "Đứng yên.", "Sit down, please.", "Ngồi xuống nhé.", "Stand up, please.", "Đứng lên nhé.", "7. SÁCH VỞ VÀ ĐỒ DÙNG HỌC TẬP", "English", "Tiếng Việt", "Take out your book.", "Lấy sách ra.", "Take out your notebook.", "Lấy vở ra.", "Take out your pencil.", "Lấy bút chì ra."]}, {"page": 5, "lines": ["Get your book ready.", "Chuẩn bị sách nhé.", "Get your notebook ready.", "Chuẩn bị vở nhé.", "Open your book.", "Mở sách ra.", "Open your notebook.", "Mở vở ra.", "Close your book.", "Đóng sách lại.", "Close your notebook.", "Đóng vở lại.", "Turn to page five.", "Mở đến trang 5.", "Turn to the next page.", "Sang trang tiếp theo.", "Look at page ten.", "Nhìn trang 10.", "Put your book away.", "Cất sách đi.", "Put your notebook away.", "Cất vở đi.", "Put your pencil down.", "Đặt bút xuống.", "Pick up your pencil.", "Nhặt/lấy bút lên.", "Get your things ready.", "Chuẩn bị đồ dùng.", "Pack your things.", "Cất đồ dùng.", "Check your schoolbag.", "Kiểm tra cặp sách.", "Keep your desk tidy.", "Giữ bàn học gọn gàng.", "8. VIẾT – WRITING", "English", "Tiếng Việt", "Write your name.", "Viết tên của em.", "Write the date.", "Viết ngày tháng.", "Write it down.", "Viết xuống.", "Copy this sentence.", "Chép câu này.", "Copy the words.", "Chép các từ.", "Write carefully.", "Viết cẩn thận.", "Write neatly.", "Viết sạch đẹp.", "Write slowly.", "Viết chậm thôi.", "Check your spelling.", "Kiểm tra chính tả.", "Check your work.", "Kiểm tra bài.", "Check your answer.", "Kiểm tra câu trả lời.", "Leave a space.", "Để một khoảng cách.", "Start here.", "Bắt đầu từ đây.", "Write on the line.", "Viết trên dòng."]}, {"page": 6, "lines": ["Don’t write here.", "Không viết ở đây.", "Finish the sentence.", "Hoàn thành câu.", "9. ĐỌC – READING", "English", "Tiếng Việt", "Read this.", "Đọc cái này.", "Read the sentence.", "Đọc câu.", "Read the text.", "Đọc bài.", "Read aloud.", "Đọc to.", "Read quietly.", "Đọc thầm.", "Read together.", "Cùng đọc.", "Read after me.", "Đọc theo cô/thầy.", "Read with your partner.", "Đọc cùng bạn.", "Read it again.", "Đọc lại.", "Read slowly.", "Đọc chậm.", "Read carefully.", "Đọc cẩn thận.", "Who wants to read?", "Ai muốn đọc?", "Your turn to read.", "Đến lượt em đọc.", "Let’s read together.", "Cùng đọc nào.", "10. NGHE – LISTENING", "English", "Tiếng Việt", "Listen carefully.", "Nghe thật kỹ.", "Listen and repeat.", "Nghe và nhắc lại.", "Listen and say.", "Nghe và nói.", "Listen and point.", "Nghe và chỉ.", "Listen and choose.", "Nghe và chọn.", "Listen and tick.", "Nghe và đánh dấu.", "Listen and match.", "Nghe và nối.", "Listen and circle.", "Nghe và khoanh.", "Listen again.", "Nghe lại.", "Listen one more time.", "Nghe thêm một lần nữa.", "Listen for the answer.", "Nghe để tìm câu trả lời.", "What did you hear?", "Em nghe thấy gì?", "Did you hear that?", "Em có nghe thấy không?"]}, {"page": 7, "lines": ["Can you hear clearly?", "Em có nghe rõ không?", "11. NÓI – SPEAKING", "English", "Tiếng Việt", "Speak up, please.", "Nói to lên nhé.", "Speak louder, please.", "Nói to hơn nhé.", "Speak slowly, please.", "Nói chậm thôi nhé.", "Say it again.", "Nói lại nhé.", "Repeat after me.", "Nhắc lại theo cô/thầy.", "Say it together.", "Cùng nói nào.", "Say it clearly.", "Nói rõ nhé.", "Use a full sentence.", "Dùng một câu đầy đủ.", "Answer in English.", "Trả lời bằng tiếng Anh.", "Ask your partner.", "Hỏi bạn bên cạnh.", "Answer your partner.", "Trả lời bạn.", "Talk to your partner.", "Nói chuyện với bạn.", "Your turn.", "Đến lượt em.", "My turn.", "Đến lượt cô/thầy.", "Who wants to answer?", "Ai muốn trả lời?", "Who would like to try?", "Ai muốn thử?", "Give it a try.", "Thử nhé.", "12. LÀM VIỆC CÁ NHÂN – PAIR WORK – GROUP WORK", "English", "Tiếng Việt", "Work alone.", "Làm bài cá nhân.", "Work by yourself.", "Tự làm bài.", "Work in pairs.", "Làm việc theo cặp.", "Find a partner.", "Tìm một bạn cùng làm.", "Work with your partner.", "Làm việc với bạn.", "Work in groups.", "Làm việc theo nhóm.", "Make a group of four.", "Tạo nhóm 4 người.", "Get into groups.", "Vào nhóm.", "Talk to your partner.", "Trao đổi với bạn.", "Help your partner.", "Giúp bạn."]}, {"page": 8, "lines": ["Take turns.", "Lần lượt thực hiện.", "Share your ideas.", "Chia sẻ ý kiến.", "Compare your answers.", "So sánh câu trả lời.", "Check with your partner.", "Kiểm tra với bạn.", "Work together.", "Cùng làm việc.", "Change partners.", "Đổi bạn.", "Move to another group.", "Chuyển sang nhóm khác.", "13. HỎI – ĐÁP TRONG LỚP", "English", "Tiếng Việt", "Do you understand?", "Em có hiểu không?", "Is it clear?", "Có rõ không?", "Any questions?", "Có câu hỏi nào không?", "Do you have any questions?", "Em có câu hỏi gì không?", "Are you finished?", "Em làm xong chưa?", "Are you done?", "Xong chưa?", "Who knows the answer?", "Ai biết câu trả lời?", "What’s the answer?", "Đáp án là gì?", "Can you answer?", "Em có thể trả lời không?", "Can you help me?", "Em có thể giúp cô/thầy không?", "Can you say it again?", "Em có thể nói lại không?", "Can everyone see?", "Mọi người có nhìn thấy không?", "Can everyone hear?", "Mọi người có nghe rõ không?", "14. KHEN NGỢI – ĐỘNG VIÊN", "English", "Tiếng Việt", "Good job!", "Làm tốt lắm!", "Great job!", "Làm rất tốt!", "Well done!", "Làm tốt lắm!", "Very good!", "Rất tốt!", "Excellent!", "Xuất sắc!", "Great!", "Tuyệt vời!", "Fantastic!", "Tuyệt vời!", "Wonderful!", "Tuyệt vời!"]}, {"page": 9, "lines": ["Perfect!", "Hoàn hảo!", "Good work!", "Làm tốt lắm!", "Great work!", "Làm rất tốt!", "Good try!", "Cố gắng tốt lắm!", "Nice try!", "Cố gắng tốt!", "Keep going!", "Tiếp tục nhé!", "Keep it up!", "Tiếp tục phát huy nhé!", "You can do it!", "Em có thể làm được!", "You’re doing well!", "Em đang làm rất tốt!", "Much better!", "Tốt hơn nhiều rồi!", "Excellent effort!", "Rất nỗ lực!", "I’m proud of you!", "Cô/thầy rất tự hào về em!", "15. SỬA LỖI NHẸ NHÀNG", "English", "Tiếng Việt", "Try again.", "Thử lại nhé.", "One more time.", "Thêm một lần nữa nhé.", "Almost!", "Gần đúng rồi!", "Not quite.", "Chưa đúng hẳn.", "Check again.", "Kiểm tra lại nhé.", "Think again.", "Nghĩ lại nhé.", "Take your time.", "Cứ từ từ nhé.", "Don’t worry.", "Đừng lo.", "That’s OK.", "Không sao.", "Good try.", "Cố gắng tốt!", "You’re close.", "Em gần đúng rồi.", "Let’s try together.", "Cùng thử nhé.", "16. THỜI GIAN VÀ CHUYỂN HOẠT ĐỘNG", "English", "Tiếng Việt", "Let’s move on.", "Chuyển sang phần tiếp theo.", "Let’s move on to the next activity.", "Chuyển sang hoạt động tiếp theo.", "Next, please.", "Tiếp theo nhé.", "Now, let’s…", "Bây giờ chúng ta hãy…"]}, {"page": 10, "lines": ["It’s time to start.", "Đến giờ bắt đầu.", "It’s time to stop.", "Đến giờ dừng lại.", "Time’s up!", "Hết giờ!", "Two minutes left.", "Còn 2 phút.", "One minute left.", "Còn 1 phút.", "You have five minutes.", "Các em có 5 phút.", "Hurry up, please.", "Nhanh lên nhé.", "Take your time.", "Cứ từ từ nhé.", "Get ready for the next activity.", "Chuẩn bị hoạt động tiếp theo.", "Let’s change activities.", "Chuyển hoạt động nhé.", "17. KẾT THÚC TIẾT HỌC", "English", "Tiếng Việt", "Time’s up!", "Hết giờ!", "Stop, please.", "Dừng lại nhé.", "Pens down, please.", "Đặt bút xuống.", "Let’s check together.", "Cùng kiểm tra nhé.", "Let’s review.", "Cùng ôn lại nhé.", "What did we learn today?", "Hôm nay chúng ta đã học gì?", "What did you learn today?", "Hôm nay em đã học gì?", "Good work today!", "Hôm nay các em làm rất tốt!", "You did a great job today!", "Hôm nay các em làm rất tốt!", "That’s all for today.", "Hôm nay đến đây thôi.", "Class is over.", "Tiết học kết thúc.", "See you next lesson!", "Hẹn gặp lại ở tiết sau!", "See you tomorrow!", "Hẹn gặp lại ngày mai!", "Have a nice day!", "Chúc các em một ngày vui vẻ!", "18. XẾP HÀNG – DI CHUYỂN", "English", "Tiếng Việt", "Line up, please.", "Xếp hàng nhé.", "Make a line.", "Xếp thành hàng.", "Stand in line.", "Đứng vào hàng.", "Get in line.", "Vào hàng.", "Line up quietly.", "Xếp hàng trật tự."]}, {"page": 11, "lines": ["Stand straight.", "Đứng thẳng.", "Stand still.", "Đứng yên.", "Stay in line.", "Giữ hàng.", "Stay together.", "Đi cùng nhau.", "Don’t push.", "Không chen lấn.", "Don’t run.", "Không chạy.", "Don’t cut in line.", "Không chen ngang.", "Wait for your turn.", "Chờ đến lượt.", "Follow me.", "Đi theo cô/thầy.", "Follow your teacher.", "Đi theo giáo viên.", "Walk slowly.", "Đi chậm thôi.", "Walk carefully.", "Đi cẩn thận.", "Keep to the right.", "Đi bên phải.", "Keep your line straight.", "Giữ hàng thẳng.", "Leave some space.", "Giữ khoảng cách.", "Move forward, please.", "Tiến lên phía trước.", "Step back, please.", "Lùi lại nhé.", "Come this way.", "Đi hướng này.", "Go this way.", "Đi hướng này.", "Wait here.", "Chờ ở đây.", "Stay here.", "Ở đây nhé.", "19. CHUYỂN TIẾT", "English", "Tiếng Việt", "Class is over.", "Tiết học kết thúc.", "Pack your things.", "Cất đồ dùng.", "Put your books away.", "Cất sách đi.", "Clean your desk.", "Dọn bàn học.", "Get ready for the next class.", "Chuẩn bị cho tiết học tiếp theo.", "Get your books ready.", "Chuẩn bị sách.", "Take out your next book.", "Lấy sách của tiết sau.", "Wait for your teacher.", "Chờ giáo viên.", "Stay in your classroom.", "Ở trong lớp.", "Don’t run in the hallway.", "Không chạy ở hành lang.", "Walk quietly.", "Đi nhẹ nhàng."]}, {"page": 12, "lines": ["See you next lesson!", "Hẹn gặp lại ở tiết sau!", "20. GIỜ RA CHƠI", "English", "Tiếng Việt", "It’s break time!", "Đến giờ ra chơi!", "Let’s go outside.", "Ra ngoài nào.", "Have fun!", "Chơi vui nhé!", "Enjoy your break!", "Chúc các em giờ nghỉ vui vẻ!", "Play safely.", "Chơi an toàn nhé.", "Be careful!", "Cẩn thận nhé!", "Don’t run!", "Không chạy!", "Don’t push!", "Không xô đẩy!", "Take care!", "Giữ gìn/cẩn thận nhé!", "Share with your friends.", "Chia sẻ với bạn.", "Be kind to your friends.", "Hãy thân thiện với bạn.", "Take turns.", "Chơi lần lượt nhé.", "Keep the playground clean.", "Giữ sân chơi sạch sẽ.", "Pick up the rubbish.", "Nhặt rác lên.", "Time to go back.", "Đến giờ quay lại rồi.", "Come back, please.", "Quay lại nhé.", "Go back to your classroom.", "Về lớp nhé.", "Get ready for class.", "Chuẩn bị vào học.", "21. VỆ SINH CÁ NHÂN", "English", "Tiếng Việt", "Wash your hands.", "Rửa tay.", "Wash your hands carefully.", "Rửa tay thật sạch.", "Use soap.", "Dùng xà phòng.", "Rinse your hands.", "Rửa sạch tay.", "Dry your hands.", "Lau khô tay.", "Keep your hands clean.", "Giữ tay sạch.", "Keep yourself clean.", "Giữ cơ thể sạch sẽ.", "Cover your mouth.", "Che miệng.", "Cover your nose and mouth.", "Che mũi và miệng."]}, {"page": 13, "lines": ["Use a tissue.", "Dùng khăn giấy.", "Put the tissue in the bin.", "Bỏ khăn giấy vào thùng rác.", "Keep the toilet clean.", "Giữ nhà vệ sinh sạch sẽ.", "22. GIỜ ĂN – BÁN TRÚ", "English", "Tiếng Việt", "It’s lunchtime!", "Đến giờ ăn trưa!", "Wash your hands first.", "Rửa tay trước nhé.", "Sit down, please.", "Ngồi xuống nhé.", "Sit properly.", "Ngồi đúng tư thế.", "Let’s eat!", "Ăn nào!", "Enjoy your meal!", "Chúc các em ăn ngon miệng!", "Eat slowly.", "Ăn chậm thôi.", "Chew well.", "Nhai kỹ nhé.", "Take small bites.", "Ăn từng miếng nhỏ.", "Drink some water.", "Uống nước nhé.", "Don’t talk with your mouth full.", "Không nói khi đang nhai nhé.", "Be careful with your food.", "Cẩn thận khi ăn nhé.", "Are you finished?", "Em ăn xong chưa?", "Are you full?", "Em no chưa?", "Finish your meal, please.", "Ăn hết phần nhé.", "Don’t waste food.", "Không lãng phí thức ăn.", "Clean your table.", "Dọn bàn nhé.", "Put your rubbish in the bin.", "Bỏ rác vào thùng.", "Put your bowl here.", "Đặt bát ở đây.", "Put your spoon here.", "Đặt thìa ở đây.", "23. NGỦ – NGHỈ TRƯA", "English", "Tiếng Việt", "It’s nap time.", "Đến giờ ngủ trưa.", "Get ready for bed.", "Chuẩn bị ngủ.", "Lie down, please.", "Nằm xuống nhé.", "Close your eyes.", "Nhắm mắt lại.", "Be quiet, please.", "Giữ yên lặng."]}, {"page": 14, "lines": ["No talking.", "Không nói chuyện.", "Sleep well!", "Ngủ ngon nhé!", "Have a good nap!", "Ngủ trưa ngon nhé!", "Relax and rest.", "Thư giãn và nghỉ ngơi.", "It’s time to wake up.", "Đến giờ dậy rồi.", "Wake up, please.", "Dậy nào.", "Get up slowly.", "Từ từ đứng dậy.", "Fold your blanket.", "Gấp chăn.", "Put your things away.", "Cất đồ dùng.", "24. GIỮ GÌN VỆ SINH VÀ MÔI TRƯỜNG", "English", "Tiếng Việt", "Keep our school clean.", "Giữ trường học sạch sẽ.", "Keep your classroom clean.", "Giữ lớp học sạch sẽ.", "Keep your desk clean.", "Giữ bàn sạch sẽ.", "Put the rubbish in the bin.", "Bỏ rác vào thùng.", "Don’t litter.", "Không xả rác.", "Pick up the rubbish.", "Nhặt rác lên.", "Clean up, please.", "Dọn dẹp nhé.", "Let’s clean together.", "Cùng dọn dẹp nhé.", "Put things back.", "Đặt đồ về đúng chỗ.", "Keep things tidy.", "Giữ đồ đạc gọn gàng.", "Take care of our school.", "Giữ gìn trường học.", "Save water.", "Tiết kiệm nước.", "Turn off the tap.", "Khóa vòi nước.", "Turn off the lights.", "Tắt đèn.", "25. AN TOÀN TRONG TRƯỜNG HỌC", "English", "Tiếng Việt", "Be careful!", "Cẩn thận!", "Stay safe!", "Giữ an toàn nhé!", "Walk, don’t run.", "Đi bộ, không chạy.", "Don’t push.", "Không xô đẩy.", "Don’t climb.", "Không trèo."]}, {"page": 15, "lines": ["Don’t play here.", "Không chơi ở đây.", "Stay away from the stairs.", "Tránh xa cầu thang.", "Use the handrail.", "Sử dụng tay vịn.", "Walk carefully on the stairs.", "Đi cẩn thận trên cầu thang.", "Wait for your turn.", "Chờ đến lượt.", "Stay with your group.", "Đi cùng nhóm.", "Tell an adult.", "Báo cho người lớn.", "Ask for help.", "Hãy nhờ giúp đỡ.", "Are you OK?", "Em có ổn không?", "Do you need help?", "Em có cần giúp không?", "26. CÁC CÂU GIAO TIẾP GIỮA GIÁO VIÊN VÀ HỌC SINH", "English", "Tiếng Việt", "How was your day?", "Hôm nay của em thế nào?", "Did you have a good day?", "Hôm nay em có vui không?", "Are you happy today?", "Hôm nay em có vui không?", "What’s your name?", "Em tên gì?", "How old are you?", "Em bao nhiêu tuổi?", "What class are you in?", "Em học lớp nào?", "Do you like English?", "Em có thích tiếng Anh không?", "What’s your favorite subject?", "Môn học yêu thích của em là gì?", "What did you do today?", "Hôm nay em đã làm gì?", "What are you doing?", "Em đang làm gì?", "Can I help you?", "Cô/thầy có thể giúp em không?", "Do you need help?", "Em có cần giúp không?", "Are you OK?", "Em ổn chứ?", "What happened?", "Có chuyện gì vậy?", "Don’t worry.", "Đừng lo.", "Everything is OK.", "Mọi thứ đều ổn.", "27. CÁC CÂU KHUYẾN KHÍCH HỌC SINH SỬ DỤNG TIẾNG ANH", "English", "Tiếng Việt", "Speak English, please.", "Hãy nói tiếng Anh nhé.", "Try it in English.", "Thử nói bằng tiếng Anh nhé."]}, {"page": 16, "lines": ["Can you say that in English?", "Em có thể nói điều đó bằng tiếng Anh không?", "Use English with your friends.", "Hãy sử dụng tiếng Anh với bạn bè.", "Let’s speak English together.", "Cùng nói tiếng Anh nhé.", "Don’t be shy.", "Đừng ngại nhé.", "Be confident!", "Hãy tự tin!", "Have a try!", "Thử nhé!", "Just try!", "Cứ thử nhé!", "Mistakes are OK.", "Mắc lỗi không sao.", "Don’t be afraid of making mistakes. Đừng sợ mắc lỗi.", "You’re doing great!", "Em đang làm rất tốt!", "Keep practicing!", "Tiếp tục luyện tập nhé!", "Practice every day.", "Luyện tập mỗi ngày.", "English is fun!", "Tiếng Anh thật vui!", "II. KHẨU LỆNH TRONG HOẠT ĐỘNG ĐỘI – SINH HOẠT CHUNG", "1. Tập hợp và ổn định đội hình", "English", "Tiếng Việt", "Good morning, everyone!", "Chào buổi sáng tất cả mọi người!", "Attention, please!", "Xin chú ý!", "Please get ready for the flag ceremony. Hãy chuẩn bị cho lễ chào cờ.", "Please stand in line.", "Hãy xếp hàng.", "Line up, please.", "Hãy xếp hàng.", "Make a straight line, please.", "Hãy xếp hàng thẳng.", "Keep your line straight.", "Giữ hàng thẳng.", "Stand straight, please.", "Đứng thẳng nhé.", "Stand still, please.", "Đứng yên/nghiêm nhé.", "Keep quiet, please.", "Giữ trật tự nhé.", "Please keep quiet.", "Hãy giữ trật tự.", "Stop talking, please.", "Dừng nói chuyện nhé.", "Face the stage, please.", "Quay mặt về phía sân khấu.", "Face the flag, please.", "Quay mặt về phía cờ.", "Get ready, everyone.", "Tất cả chuẩn bị.", "Are you ready?", "Các em sẵn sàng chưa?", "2. Bắt đầu lễ chào cờ"]}, {"page": 17, "lines": ["English", "Tiếng Việt", "Good morning, teachers and students!", "Kính chào các thầy cô và các em học", "sinh!", "Welcome to our Monday flag", "ceremony!", "Chào mừng đến với lễ chào cờ thứ Hai!", "The flag ceremony is about to begin.", "Lễ chào cờ sắp bắt đầu.", "Let’s begin the flag ceremony.", "Chúng ta bắt đầu lễ chào cờ.", "Please stand at attention.", "Hãy đứng nghiêm.", "Please prepare for the flag salute.", "Chuẩn bị chào cờ.", "Please face the flag.", "Hãy hướng về phía cờ.", "Let’s salute the flag.", "Chúng ta thực hiện nghi thức chào cờ.", "Please remain standing.", "Tiếp tục đứng.", "Please stand still.", "Hãy đứng nghiêm.", "At ease, please.", "Nghỉ.", "Lower your hands, please.", "Hạ tay xuống.", "3. Chuyển sang các nội dung tiếp theo", "English", "Tiếng Việt", "Please remain quiet.", "Hãy tiếp tục giữ trật tự.", "Please listen carefully.", "Hãy lắng nghe thật kỹ.", "Now, let’s move on to the next", "activity.", "Bây giờ chúng ta chuyển sang hoạt động", "tiếp theo.", "Next, we have…", "Tiếp theo là…", "Now, let’s welcome…", "Bây giờ hãy chào đón…", "Please welcome our teachers!", "Hãy chào đón các thầy cô!", "Please give a big hand!", "Hãy dành một tràng pháo tay!", "Let’s give them a big hand!", "Hãy dành một tràng pháo tay cho họ!", "Please listen to the following", "announcement.", "Hãy lắng nghe thông báo sau.", "Please pay attention.", "Hãy chú ý.", "Let’s continue.", "Chúng ta tiếp tục nhé.", "Let’s move on.", "Chúng ta chuyển sang phần tiếp theo.", "4. Nhận xét nền nếp", "English", "Tiếng Việt", "Now, let’s review last week’s activities. Bây giờ chúng ta cùng nhìn lại hoạt động tuần trước."]}, {"page": 18, "lines": ["Let’s look at last week’s results.", "Cùng xem kết quả tuần trước.", "Here are the results for this week.", "Đây là kết quả của tuần này.", "Congratulations to the winning class!", "Chúc mừng lớp đạt thành tích tốt!", "Congratulations!", "Chúc mừng!", "Well done!", "Làm tốt lắm!", "Good job!", "Làm tốt!", "Keep it up!", "Hãy tiếp tục phát huy!", "Great work!", "Làm rất tốt!", "Let’s do better next week.", "Hãy làm tốt hơn vào tuần tới.", "Please follow the school rules.", "Hãy thực hiện nội quy trường.", "Please be on time.", "Hãy đi học đúng giờ.", "Keep your classroom clean.", "Giữ lớp học sạch sẽ.", "Keep your school clean.", "Giữ trường học sạch sẽ.", "Be polite and respectful.", "Hãy lịch sự và tôn trọng mọi người.", "Be kind to your friends.", "Hãy thân thiện với bạn bè.", "Follow the rules every day.", "Hãy thực hiện nội quy mỗi ngày.", "5. Nhắc nhở học sinh", "English", "Tiếng Việt", "Please arrive at school on time.", "Hãy đến trường đúng giờ.", "Please wear your uniform properly.", "Mặc đồng phục đúng quy định.", "Please keep your uniform neat and tidy. Giữ đồng phục gọn gàng.", "Please keep your classroom tidy.", "Giữ lớp học gọn gàng.", "Don’t litter.", "Không xả rác.", "Put rubbish in the bin.", "Bỏ rác vào thùng.", "Walk, don’t run.", "Đi bộ, không chạy.", "Don’t push your friends.", "Không xô đẩy bạn.", "Be careful on the stairs.", "Cẩn thận khi đi cầu thang.", "Be polite.", "Hãy lịch sự.", "Be helpful.", "Hãy biết giúp đỡ mọi người.", "Be responsible.", "Hãy có trách nhiệm.", "6. Kết thúc lễ chào cờ", "English", "Tiếng Việt", "That’s all for today.", "Nội dung hôm nay đến đây là hết.", "Thank you for listening.", "Cảm ơn các em đã lắng nghe."]}, {"page": 19, "lines": ["Thank you, everyone!", "Cảm ơn tất cả mọi người!", "Have a great week!", "Chúc các em một tuần vui vẻ!", "Have a nice week!", "Chúc các em một tuần tốt lành!", "Have a great day!", "Chúc các em một ngày vui vẻ!", "See you next Monday!", "Hẹn gặp lại vào thứ Hai tuần sau!", "Have a good week!", "Chúc một tuần tốt lành!", "III. CÁC CÂU ĐỘI CỜ ĐỎ DÙNG KHI ĐI KIỂM TRA CÁC LỚP", "1. Chào lớp và giới thiệu", "English", "Tiếng Việt", "Good morning, everyone!", "Chào buổi sáng các em!", "Good afternoon, everyone!", "Chào buổi chiều các em!", "Hello, everyone!", "Chào tất cả các em!", "How are you today?", "Hôm nay các em khỏe không?", "We are the Red Scarf Team.", "Chúng mình là Đội cờ đỏ.", "We are here for the weekly check. Chúng mình đến kiểm tra nền nếp tuần này.", "We are here to check the classroom. Chúng mình đến kiểm tra lớp.", "Is everyone ready?", "Các bạn sẵn sàng chưa?", "May we come in?", "Chúng mình có thể vào lớp không?", "2. Kiểm tra sĩ số", "English", "Tiếng Việt", "How many students are there today?", "Hôm nay lớp có bao nhiêu học sinh?", "How many students are absent?", "Có bao nhiêu học sinh vắng?", "Is anyone absent today?", "Hôm nay có bạn nào vắng không?", "Who is absent today?", "Hôm nay bạn nào vắng?", "Is everyone here?", "Các bạn có mặt đầy đủ không?", "Are all the students here?", "Tất cả học sinh có mặt đầy đủ không?", "How many boys are there?", "Lớp có bao nhiêu bạn nam?", "How many girls are there?", "Lớp có bao nhiêu bạn nữ?", "Is anyone late today?", "Hôm nay có bạn nào đi muộn không?", "3. Kiểm tra đồng phục", "English", "Tiếng Việt", "Are you wearing your school uniform?", "Các bạn có mặc đồng phục không?", "Is your uniform neat and tidy?", "Đồng phục có gọn gàng không?"]}, {"page": 20, "lines": ["Please check your uniform.", "Hãy kiểm tra đồng phục của mình.", "Please tuck in your shirt.", "Hãy sơ vin áo.", "Please wear your uniform properly.", "Hãy mặc đồng phục đúng quy định.", "Please wear your name tag.", "Hãy đeo bảng tên.", "Please check your name tag.", "Hãy kiểm tra bảng tên.", "Please keep your clothes neat.", "Giữ quần áo gọn gàng nhé.", "Please wear your shoes properly.", "Hãy đi giày đúng quy định.", "4. Kiểm tra vệ sinh lớp học", "English", "Tiếng Việt", "Is your classroom clean?", "Lớp học có sạch không?", "Is the floor clean?", "Sàn lớp có sạch không?", "Is your classroom tidy?", "Lớp học có gọn gàng không?", "Please keep your classroom clean.", "Hãy giữ lớp học sạch sẽ.", "Please clean the floor.", "Hãy làm sạch sàn.", "Please pick up the rubbish.", "Hãy nhặt rác.", "Put the rubbish in the bin.", "Bỏ rác vào thùng.", "Don’t litter.", "Không xả rác.", "Keep your desk clean.", "Giữ bàn sạch sẽ.", "Keep your classroom tidy.", "Giữ lớp học gọn gàng.", "Please clean the board.", "Hãy lau bảng.", "Please arrange the desks and chairs.", "Hãy sắp xếp bàn ghế.", "Please tidy the classroom.", "Hãy dọn gọn lớp học.", "Keep the windows clean.", "Giữ cửa sổ sạch sẽ.", "5. Kiểm tra trật tự – nền nếp", "English", "Tiếng Việt", "Please be quiet.", "Hãy giữ trật tự.", "Stop talking, please.", "Dừng nói chuyện nhé.", "No talking, please.", "Không nói chuyện nhé.", "Listen, please.", "Hãy lắng nghe.", "Pay attention, please.", "Hãy chú ý.", "Sit properly, please.", "Ngồi đúng tư thế nhé.", "Sit quietly, please.", "Ngồi yên lặng nhé.", "Stay in your seat.", "Ngồi tại chỗ.", "Please don’t run in the classroom. Không chạy trong lớp."]}, {"page": 21, "lines": ["Please don’t shout.", "Không la hét.", "Please keep quiet.", "Hãy giữ trật tự.", "Thank you for being quiet.", "Cảm ơn các bạn đã giữ trật tự.", "7. Kiểm tra thực hiện nội quy", "English", "Tiếng Việt", "Do you follow the school rules?", "Các bạn có thực hiện nội quy trường", "không?", "Do you follow the classroom rules?", "Các bạn có thực hiện nội quy lớp không?", "Please follow the school rules.", "Hãy thực hiện nội quy trường.", "Please follow the classroom rules.", "Hãy thực hiện nội quy lớp.", "Remember the school rules.", "Hãy nhớ nội quy trường.", "Follow the rules every day.", "Thực hiện nội quy mỗi ngày.", "Please be polite.", "Hãy lịch sự.", "Please respect your teachers and", "friends.", "Hãy tôn trọng thầy cô và bạn bè.", "Be kind to your friends.", "Hãy thân thiện với bạn bè.", "Help your friends.", "Hãy giúp đỡ bạn bè.", "8. Kiểm tra vệ sinh cá nhân", "English", "Tiếng Việt", "Are your hands clean?", "Tay các bạn có sạch không?", "Please keep your hands clean.", "Hãy giữ tay sạch.", "Please keep yourself clean.", "Hãy giữ vệ sinh cá nhân.", "Please keep your uniform clean. Giữ đồng phục sạch sẽ.", "Please keep your shoes clean.", "Giữ giày dép sạch sẽ.", "Please keep your hair neat.", "Giữ tóc gọn gàng.", "9. Khi phát hiện lỗi và nhắc nhở", "English", "Tiếng Việt", "Please check this again.", "Hãy kiểm tra lại điều này nhé.", "Please fix this.", "Hãy sửa lại nhé.", "Please clean this area.", "Hãy làm sạch khu vực này.", "Please put it back.", "Hãy đặt nó về đúng chỗ.", "Please keep it tidy.", "Hãy giữ gọn gàng nhé.", "Please remember this next time.", "Lần sau hãy nhớ điều này nhé.", "Let’s do better next time.", "Lần sau chúng ta cùng làm tốt hơn nhé."]}, {"page": 22, "lines": ["Please be more careful next time. Lần sau hãy cẩn thận hơn nhé.", "Please correct it.", "Hãy sửa lại nhé.", "Please do it again.", "Hãy làm lại nhé.", "Please take care of your classroom. Hãy giữ gìn lớp học của mình.", "Thank you for fixing it.", "Cảm ơn các bạn đã sửa lại.", "Much better!", "Tốt hơn nhiều rồi!", "10. Khi lớp thực hiện tốt", "English", "Tiếng Việt", "Good job, everyone!", "Cả lớp làm tốt lắm!", "Well done, everyone!", "Cả lớp làm rất tốt!", "Great job!", "Làm rất tốt!", "Your classroom is very clean.", "Lớp của các bạn rất sạch.", "Your classroom is very tidy.", "Lớp của các bạn rất gọn gàng.", "Everything looks great!", "Mọi thứ trông rất tốt!", "Excellent!", "Xuất sắc!", "Keep it up!", "Hãy tiếp tục phát huy!", "Keep up the good work!", "Hãy tiếp tục làm tốt nhé!", "You are doing a great job!", "Các bạn đang làm rất tốt!", "Thank you for your cooperation. Cảm ơn các bạn đã hợp tác.", "Keep up the good work!", "Hãy tiếp tục phát huy!", "11. Kết thúc kiểm tra", "English", "Tiếng Việt", "That’s all. Thank you!", "Đến đây là hết. Cảm ơn các bạn!", "Thank you for your cooperation. Cảm ơn các bạn đã hợp tác.", "Thank you for your time.", "Cảm ơn các bạn.", "Keep your classroom clean.", "Hãy giữ lớp học sạch sẽ.", "Keep it tidy.", "Hãy giữ mọi thứ gọn gàng.", "Follow the school rules.", "Hãy thực hiện nội quy trường.", "Have a nice day!", "Chúc các bạn một ngày vui vẻ!", "Have a good day!", "Chúc các bạn một ngày tốt lành!", "See you next time!", "Hẹn gặp lại lần sau!", "See you next week!", "Hẹn gặp lại tuần sau!", "Goodbye, everyone!", "Tạm biệt tất cả các bạn!", "See you!", "Hẹn gặp lại!"]}, {"page": 23, "lines": []}];
+
+const icons = ["👋","🙏","📚","👀","🤫","🧍","✏️","📝","📖","🎧","🗣️","👥","❓","⭐","💡","⏰","🏁","🚶","🔄","⚽","🧼","🍱","😴","🌱","🛡️","🤝","🇬🇧"];
+const major = /^(I|II|III)\.\s/;
+const section = /^\d+\.\s+/;
+
+function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+
+function isHeader(s){
+  return major.test(s) || section.test(s) || s === "English Tiếng Việt" || s === "English                    Tiếng Việt";
+}
+function isEnglish(s){
+  // Most English entries contain Latin words and punctuation; Vietnamese translations
+  // usually include Vietnamese diacritics. This heuristic is only for visual pairing.
+  return !/[ăâđêôơưáàảãạấầẩẫậắằẳẵặéèẻẽẹếềểễệíìỉĩịóòỏõọốồổỗộớờởỡợúùủũụứừửữựýỳỷỹỵ]/i.test(s);
+}
+function headingIcon(s){
+  let idx = 0;
+  if(major.test(s)) idx = s.startsWith("II.")?2:s.startsWith("III.")?3:0;
+  else if(section.test(s)){ idx = (parseInt(s)||1) % icons.length; }
+  return icons[idx];
+}
+
+function buildContentLines(lines){
+  const out=[];
+  for(let i=0;i<lines.length;i++){
+    const s=lines[i];
+    if(isHeader(s)) out.push({type:"heading", text:s});
+    else out.push({type:"line", text:s});
+  }
+  return out;
+}
+
+// Build logical content chunks. We deliberately keep EVERY extracted non-empty line.
+// Tables are visualized by pairing adjacent English/Vietnamese lines where possible,
+// while any unpaired lines remain visible as source lines.
+const logical=[];
+for(const pg of SOURCE){
+  logical.push({type:"sourcePage", page:pg.page, lines:buildContentLines(pg.lines)});
+}
+
+// Flatten into chunks of manageable size while never dropping source lines.
+const pages=[];
+pages.push({cover:true});
+let currentRows=[], currentTitle="";
+function flush(){
+  if(currentRows.length) pages.push({title:currentTitle||"Nội dung", rows:currentRows}), currentRows=[];
+}
+for(const block of logical){
+  let pendingEnglish=null;
+  for(const item of block.lines){
+    if(item.type==="heading"){
+      if(pendingEnglish){currentRows.push({en:pendingEnglish,vi:""});pendingEnglish=null;}
+      if(currentRows.length && (major.test(item.text) || section.test(item.text))){
+        // Keep section heading at the top of a new visual page when possible.
+        if(currentRows.length>8) flush();
+      }
+      currentTitle=item.text;
+      currentRows.push({heading:item.text});
+    }else{
+      if(!pendingEnglish){
+        pendingEnglish=item.text;
+      }else{
+        currentRows.push({en:pendingEnglish,vi:item.text});
+        pendingEnglish=null;
+      }
+      if(currentRows.length>=14) flush();
+    }
+  }
+  if(pendingEnglish){currentRows.push({en:pendingEnglish,vi:""});}
+}
+flush();
+
+const book=document.getElementById("book");
+function makePage(p,idx){
+  const el=document.createElement("section");
+  el.className="page"+(idx===0?" active":"");
+  el.dataset.index=idx;
+  if(p.cover){
+    el.classList.add("cover");
+    el.innerHTML=`<img src="https://i.ibb.co/GvJSkhHY/Gemini-Generated-Image-pytdfypytdfypytd-1.png" alt="Trang bìa">`;
+  }else{
+    let title=p.title||"Nội dung";
+    let rows="";
+    for(const r of p.rows){
+      if(r.heading){
+        rows+=`<tr><td colspan="2" style="background:#eff6ff;color:#1d4ed8;font-weight:800;font-size:1.08em;padding-top:10px;padding-bottom:10px">${headingIcon(r.heading)} ${esc(r.heading)}</td></tr>`;
+      }else{
+        rows+=`<tr><td>${esc(r.en)}</td><td>${esc(r.vi)}</td></tr>`;
+      }
+    }
+    el.innerHTML=`<div class="heading"><span class="icon">${headingIcon(title)}</span><h2>${esc(title)}</h2></div>
+      <table class="table"><thead><tr><th>🇬🇧 English</th><th>🇻🇳 Tiếng Việt</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+  el.insertAdjacentHTML("beforeend",`<div class="footer"><span>Ckientkan5</span><span>Trang ${idx+1}</span></div>`);
+  return el;
+}
+pages.forEach((p,i)=>book.appendChild(makePage(p,i)));
+
+let current=0;
+const pageEls=[...document.querySelectorAll(".page")];
+function render(){
+  pageEls.forEach((p,i)=>{
+    p.classList.toggle("flipped",i<current);
+    p.classList.toggle("active",i===current);
+    p.style.zIndex=(i<current?i:pages.length-i);
+  });
+  document.getElementById("counter").textContent=`${current+1} / ${pages.length}`;
+}
+function go(n){current=Math.max(0,Math.min(pages.length-1,n));render();}
+document.getElementById("prev").onclick=()=>go(current-1);
+document.getElementById("next").onclick=()=>go(current+1);
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowLeft")go(current-1);
+  if(e.key==="ArrowRight" || e.key===" ") { if(e.key===" ") e.preventDefault(); go(current+1); }
+});
+let drag=false,startX=0;
+book.addEventListener("pointerdown",e=>{drag=true;startX=e.clientX;book.setPointerCapture(e.pointerId)});
+book.addEventListener("pointerup",e=>{
+  if(!drag)return;drag=false;const dx=e.clientX-startX;
+  if(Math.abs(dx)>45) go(current+(dx<0?1:-1));
+});
+document.getElementById("fullscreen").onclick=()=>{
+  const el=document.documentElement;
+  if(!document.fullscreenElement) el.requestFullscreen?.(); else document.exitFullscreen?.();
+};
+document.getElementById("tocBtn").onclick=()=>{
+  const choices=pages.map((p,i)=>({p,i})).filter(x=>x.p.title);
+  const box=document.createElement("div");
+  box.className="page active";
+  box.style.zIndex=999;
+  box.innerHTML=`<div class="heading"><span class="icon">☰</span><h2>Mục lục</h2></div><div id="toc"></div>`;
+  const toc=box.querySelector("#toc");
+  choices.forEach(({p,i})=>{
+    const b=document.createElement("button");
+    b.textContent=`${headingIcon(p.title)} ${p.title}`;
+    b.onclick=()=>{box.remove();go(i)};
+    toc.appendChild(b);
+  });
+  const close=document.createElement("button");close.textContent="Đóng ✕";close.onclick=()=>box.remove();
+  toc.appendChild(close);book.appendChild(box);
+};
+document.getElementById("search").addEventListener("input",e=>{
+  const q=e.target.value.trim().toLowerCase();
+  if(!q)return;
+  const idx=pages.findIndex(p=>!p.cover && JSON.stringify(p).toLowerCase().includes(q));
+  if(idx>=0)go(idx);
+});
+render();
+</script>
 </body>
 </html>
